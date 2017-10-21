@@ -1,0 +1,20 @@
+logging:
+  level:
+    org.springframework: INFO
+    com.wym: DEBUG
+################### DataSource Configuration ##########################
+spring:
+  application:
+    name: gs-relational-data-access
+    
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:8066
+      username: root
+      password: password
+      initialize: false
+      init-db: false
+      
+     
+      
+  

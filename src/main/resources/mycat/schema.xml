@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE mycat:schema SYSTEM "schema.dtd">
+<mycat:schema xmlns:mycat="http://io.mycat/">
+	
+	<schema name="GLOBALDB" checkSQLschema="false" sqlMaxLimit="100">
+		<!-- global table is auto cloned to all defined data nodes ,so can join
+			with any table whose sharding node is in the same data node -->
+		<table name="orgmapping" primaryKey="id" type="global" dataNode="gdn" />
+	</schema>
+	
+	<schema name="JG1DB" checkSQLschema="false" sqlMaxLimit="100">
+		<table name="user" primaryKey="id" autoIncrement="true" dataNode="jg1dn" />
+		<table name="user_order" primaryKey="id" autoIncrement="true" dataNode="jg1dn" />
+	</schema>
+	
+	<schema name="JG2DB" checkSQLschema="false" sqlMaxLimit="100">
+		<table name="user" primaryKey="id" autoIncrement="true" dataNode="jg2dn" />
+		<table name="user_order" primaryKey="id" autoIncrement="true" dataNode="jg2dn" />
+	</schema>
+	
+	<schema name="JG3DB" checkSQLschema="false" sqlMaxLimit="100">
+		<table name="user" primaryKey="id" autoIncrement="true" dataNode="jg3dn" />
+		<table name="user_order" primaryKey="id" autoIncrement="true" dataNode="jg3dn" />
+	</schema>
+	
+	<schema name="JG4DB" checkSQLschema="false" sqlMaxLimit="100">
+		<table name="user" primaryKey="id" autoIncrement="true" dataNode="jg4dn" />
+		<table name="user_order" primaryKey="id" autoIncrement="true" dataNode="jg4dn" />
+	</schema>
+	<schema name="JG5DB" checkSQLschema="false" sqlMaxLimit="100">
+		<table name="user" primaryKey="id" autoIncrement="true" dataNode="jg5dn" />
+		<table name="user_order" primaryKey="id" autoIncrement="true" dataNode="jg5dn" />
+	</schema>
+	
+	<dataNode name="gdn" dataHost="globalhost" database="wymglobal" />
+	<dataNode name="jg1dn" dataHost="g1host" database="jg1" />
+	<dataNode name="jg2dn" dataHost="g1host" database="jg2" />
+	<dataNode name="jg3dn" dataHost="g2host" database="jg3" />
+	<dataNode name="jg4dn" dataHost="g2host" database="jg4" />
+	<dataNode name="jg5dn" dataHost="g2host" database="jg5" />
+	
+	
+	<dataHost name="globalhost" maxCon="1000" minCon="10" balance="0"
+			  writeType="0" dbType="mysql" dbDriver="native" switchType="1"  slaveThreshold="100">
+		<heartbeat>select user()</heartbeat>
+		<!-- can have multi write hosts -->
+		<writeHost host="hostM1" url="192.168.0.199:3306" user="root"
+				   password="password">
+		</writeHost>
+	</dataHost>
+	<dataHost name="g1host" maxCon="1000" minCon="10" balance="0"
+			  writeType="0" dbType="mysql" dbDriver="native" switchType="1"  slaveThreshold="100">
+		<heartbeat>select user()</heartbeat>
+		<!-- can have multi write hosts -->
+		<writeHost host="hostM1" url="192.168.1.13:3306" user="root"
+				   password="password">
+		</writeHost>
+	</dataHost>
+	<dataHost name="g2host" maxCon="1000" minCon="10" balance="0"
+			  writeType="0" dbType="mysql" dbDriver="native" switchType="1"  slaveThreshold="100">
+		<heartbeat>select user()</heartbeat>
+		<!-- can have multi write hosts -->
+		<writeHost host="hostM1" url="192.168.1.142:3306" user="root"
+				   password="password">
+		</writeHost>
+	</dataHost>
+</mycat:schema>
